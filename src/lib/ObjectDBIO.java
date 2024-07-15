@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public abstract class ObjectDBIO {
+
   Scanner sc = new Scanner(System.in);
 
   //Connection
@@ -30,6 +31,7 @@ public abstract class ObjectDBIO {
       return false;
     }
   }
+
   //끊기 close()
   protected boolean close() {
     try {
@@ -42,19 +44,19 @@ public abstract class ObjectDBIO {
   }
 
   //select query 실행하기
-  protected ResultSet execute(String query, ResultSet rs) {
+  protected ResultSet execute(String query, ResultSet rs, int bno) {
     try {
       open();
-      Statement stmt = con.createStatement();
-      rs = stmt.executeQuery(query);
-      close();
+      PreparedStatement pstmt = con.prepareStatement(query);
+      pstmt.setInt(1, bno);
+      rs = pstmt.executeQuery();
     } catch (SQLException e) {
       System.err.println(e.getMessage());
     }
     return rs;
   }
 
-  //insert, update, delete 실행하기
+  //insert, update, delete* 실행하기
   protected boolean execute(String query, Board board) {
 
     String btitle = board.getBtitle();
@@ -65,13 +67,13 @@ public abstract class ObjectDBIO {
     try {
       open();
       PreparedStatement pstmt = con.prepareStatement(query);
-      pstmt.setString(1,btitle);
-      pstmt.setString(2,bcontent);
-      pstmt.setString(3,bwriter);
+      pstmt.setString(1, btitle);
+      pstmt.setString(2, bcontent);
+      pstmt.setString(3, bwriter);
 
       int result = pstmt.executeUpdate();
 
-      if(result == 1) {
+      if (result == 1) {
         result1 = true;
       } else if (result == 0) {
         result1 = false;

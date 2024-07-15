@@ -22,4 +22,9 @@ public class Board {
     this.bcontent = bcontent;
     this.bwriter = bwriter;
   }
+
+  public Board(int bno) {
+    this.bno = bno;
+  }
+
 }

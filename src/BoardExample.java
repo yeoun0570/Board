@@ -8,10 +8,9 @@ public class BoardExample {
 
     BoardDBIO boardDBIO = new BoardDBIO();
 
-
-
-    boardDBIO.insertBoard();
-    
+    //boardDBIO.insertBoard();
+    //boardDBIO.selectBoardAll();
+    boardDBIO.selectBoard();
   }
 
 }
