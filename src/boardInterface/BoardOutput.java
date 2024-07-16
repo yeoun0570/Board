@@ -1,9 +1,10 @@
-/*package boardInterface;
+package boardInterface;
 
 import board.Board;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public interface BoardOutput {
-  public ArrayList<Board> selectBoardAll();
+  public TreeSet<Board> selectBoardAll();
 
-}*/
+}

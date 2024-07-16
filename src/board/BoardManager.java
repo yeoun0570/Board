@@ -1,6 +1,6 @@
 package board;
 
-import java.util.ArrayList;
+import java.util.TreeSet;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -8,30 +8,36 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardManager extends BoardDBIO {
 
+  @Getter
   private static final BoardManager instance = new BoardManager();
 
   public boolean insertBoard(Board board) {
-    return false;
+    super.insertBoard();
+    return true;
   }
 
-  public ArrayList<Board> selectBoard() {
-    return new ArrayList<Board>();
+  public void selectBoard() {
+    super.selectBoard();
   }
 
   public boolean deleteBoardAll() {
-    return false;
+    super.deleteBoardAll();
+    return true;
   }
 
   public boolean updateBoard() {
-    return false;
+    super.updateBoard();
+    return true;
   }
 
-  public ArrayList<Board> selectBoardAll() {
-    return new ArrayList<Board>();
+  public TreeSet<Board> selectBoardAll() {
+    super.selectBoardAll();
+    return new TreeSet<>();
   }
 
   public boolean deleteBoard() {
-    return false;
+    super.deleteBoard();
+    return true;
   }
 
 }

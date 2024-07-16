@@ -43,22 +43,10 @@ public abstract class ObjectDBIO {
     }
   }
 
-  //select query 실행하기
-  protected ResultSet execute(String query, ResultSet rs, int bno) {
-    try {
-      open();
-      PreparedStatement pstmt = con.prepareStatement(query);
-      pstmt.setInt(1, bno);
-      rs = pstmt.executeQuery();
-    } catch (SQLException e) {
-      System.err.println(e.getMessage());
-    }
-    return rs;
-  }
+  //insert
+  protected boolean executeInsert(String query, Board board) {
 
-  //insert, update, delete* 실행하기
-  protected boolean execute(String query, Board board) {
-
+    int bno = board.getBno();
     String btitle = board.getBtitle();
     String bcontent = board.getBcontent();
     String bwriter = board.getBwriter();
@@ -86,6 +74,121 @@ public abstract class ObjectDBIO {
       return result1;
     }
     return result1;
+  }
+
+  //select query 실행하기
+  protected ResultSet executeSelect(String query, ResultSet rs, int bno) {
+    try {
+      open();
+      PreparedStatement pstmt = con.prepareStatement(query);
+      pstmt.setInt(1, bno);
+      rs = pstmt.executeQuery();
+    } catch (SQLException e) {
+      System.err.println(e.getMessage());
+    }
+    return rs;
+  }
+
+
+
+  //update
+  protected boolean executeUpdate(String query, Board board) {
+
+    int bno = board.getBno();
+    String btitle = board.getBtitle();
+    String bcontent = board.getBcontent();
+    String bwriter = board.getBwriter();
+
+    boolean result1 = false;
+    try {
+      open();
+      PreparedStatement pstmt = con.prepareStatement(query);
+      pstmt.setString(1, btitle);
+      pstmt.setString(2, bcontent);
+      pstmt.setString(3, bwriter);
+      pstmt.setInt(4, bno);
+
+      int result = pstmt.executeUpdate();
+
+      if (result == 1) {
+        result1 = true;
+      } else if (result == 0) {
+        result1 = false;
+      }
+
+      pstmt.close();
+      close();
+    } catch (SQLException e) {
+      System.err.println(e.getMessage());
+      return result1;
+    }
+    return result1;
+  }
+
+  public boolean executeDelete(String query, Board board) {
+
+    int bno = board.getBno();
+
+    boolean result1 = false;
+    try {
+      open();
+      PreparedStatement pstmt = con.prepareStatement(query);
+      pstmt.setInt(1, bno);
+
+      int result = pstmt.executeUpdate();
+      pstmt.close();
+      close();
+      if (result == 1) {
+        result1 = true;
+      } else if (result == 0) {
+        result1 = false;
+      }
+    } catch (SQLException e) {
+      System.err.println(e.getMessage());
+    }
+
+    return result1;
+  }
+
+  public boolean executeDeleteAll(String query) {
+
+    boolean result1 = false;
+
+    try {
+      open();
+      PreparedStatement pstmt = con.prepareStatement(query);
+      int result = pstmt.executeUpdate();
+
+      pstmt.close();
+      close();
+
+      if (result == 1) {
+        result1 = true;
+      } else if (result == 0) {
+        result1 = false;
+      }
+
+    } catch (SQLException e) {
+      System.err.println(e.getMessage());
+    }
+
+    return result1;
+
+  }
+
+  protected ResultSet executeSelectAll(String query, ResultSet rs) {
+
+    try {
+      open();
+      Statement stmt = con.createStatement();
+      rs = stmt.executeQuery(query);
+
+    } catch (Exception e) {
+      System.err.println(e.getMessage());
+    }
+
+    return rs;
+
   }
 
 
