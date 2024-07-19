@@ -13,11 +13,7 @@ public class BoardDBIO extends ObjectDBIO implements BoardIO {
 
   Scanner sc = new Scanner(System.in);
 
-  int bno;
-  String btitle;
-  String bcontent;
-  String bwriter;
-  String bdate;
+  int no;
 
   @Override
   public boolean insertBoard() {
@@ -50,28 +46,33 @@ public class BoardDBIO extends ObjectDBIO implements BoardIO {
     String query = "SELECT bno, btitle, bcontent, bwriter, DATE_FORMAT(bdate, '%Y.%m.%d') FROM board WHERE bno = ?";
     ResultSet rs = null;
 
-    System.out.print("bno : ");
-    bno = sc.nextInt();
+    String title = "";
+    String content = "";
+    String writer = "";
+    String date = "";
 
-    rs = super.executeSelect(query, rs, bno);
+    System.out.print("bno : ");
+    no = sc.nextInt();
+
+    rs = super.executeSelect(query, rs, no);
     try {
 
       while (rs.next()) {
-        bno = rs.getInt(1);
-        btitle = rs.getString(2);
-        bcontent = rs.getString(3);
-        bwriter = rs.getString(4);
-        bdate = rs.getString(5);
+        no = rs.getInt(1);
+        title = rs.getString(2);
+        content = rs.getString(3);
+        writer = rs.getString(4);
+        date = rs.getString(5);
 
-        Board board = new Board(bno, btitle, bcontent, bwriter, bdate);
+        Board board = new Board(no, title, content, writer, date);
         boardlist.add(board);
 
       }
-      System.out.println("번호 : " + bno);
-      System.out.println("제목 : " + btitle);
-      System.out.println("내용 : " + bcontent);
-      System.out.println("작성자 : " + bwriter);
-      System.out.println("날짜 : " + bdate);
+      System.out.println("번호 : " + no);
+      System.out.println("제목 : " + title);
+      System.out.println("내용 : " + content);
+      System.out.println("작성자 : " + writer);
+      System.out.println("날짜 : " + date);
 
       rs.close();
       super.close();
@@ -100,7 +101,7 @@ public class BoardDBIO extends ObjectDBIO implements BoardIO {
     System.out.print("작성자 : ");
     String writer = sc.nextLine();
 
-    Board board = new Board(title, content, writer, bno);
+    Board board = new Board(title, content, writer, no);
 
     StringBuilder query = new StringBuilder();
     query.append("UPDATE board SET btitle = ?, ")
@@ -116,7 +117,7 @@ public class BoardDBIO extends ObjectDBIO implements BoardIO {
   @Override
   public boolean deleteBoard() {
 
-    Board board = new Board(bno);
+    Board board = new Board(no);
     String query = "DELETE FROM board WHERE bno = ?";
     super.executeDelete(query, board);
     return true;
@@ -149,13 +150,13 @@ public class BoardDBIO extends ObjectDBIO implements BoardIO {
     try {
       rs = super.executeSelectAll(query, rs);
       while (rs.next()) {
-        bno = rs.getInt(1);
-        btitle = rs.getString(2);
-        bcontent = rs.getString(3);
-        bwriter = rs.getString(4);
-        bdate = rs.getString(5);
+        no = rs.getInt(1);
+        String title = rs.getString(2);
+        String content = rs.getString(3);
+        String wirter = rs.getString(4);
+        String date = rs.getString(5);
 
-        Board board = new Board(bno, btitle, bcontent, bwriter, bdate);
+        Board board = new Board(no, title, content, wirter, date);
         boardlist.add(board);
 
       }
