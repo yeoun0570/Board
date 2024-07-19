@@ -1,6 +1,4 @@
-import board.Board;
-import board.BoardDBIO;
-import board.BoardManager;
+import service.BoardManager;
 import java.util.Scanner;
 
 public class BoardExample {
@@ -9,8 +7,6 @@ public class BoardExample {
   static Scanner sc = new Scanner(System.in);
 
   public static void main(String[] args) {
-
-    BoardDBIO boardDBIO = new BoardDBIO();
 
     while(true) {
       viewList();
@@ -28,7 +24,6 @@ public class BoardExample {
       }
 
     }
-
   }
 
   private static void viewList () {

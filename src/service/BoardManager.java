@@ -1,5 +1,6 @@
-package board;
+package service;
 
+import board.Board;
 import java.util.TreeSet;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,5 +1,6 @@
-package board;
+package service;
 
+import board.Board;
 import boardInterface.BoardIO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -167,13 +168,11 @@ public class BoardDBIO extends ObjectDBIO implements BoardIO {
     }
 
     for (Board board : boardlist) {
-      System.out.printf("%s %10s %20s %30s\n", board.getBno(), board.getBwriter(), board.getBdate(), board.getBtitle());
-      /*str.append(board.getBno() + "\t\t")
-          .append(board.getBwriter() + "\t\t\t\t")
-          .append(board.getBdate() + "\t\t\t\t\t")
-          .append(board.getBtitle());
-
-      System.out.println(str);*/
+      System.out.printf("%s %10s %20s %30s\n",
+          board.getBno(),
+          board.getBwriter(),
+          board.getBdate(),
+          board.getBtitle());
     }
 
     return boardlist;
